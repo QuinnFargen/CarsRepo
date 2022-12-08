@@ -4,10 +4,10 @@ def addAND(param):
         return ''
     return param + '&'
 
-def carsDotCom_Single(id):
+def Url_Single(id):
     return 'https://www.cars.com/vehicledetail/' + id + '/'
 
-def carsDotCom_Multi(page=1,pgsize='100',make='',model='',trim='',yrmin='',yrmax='',mile='',type='all',sort='best_match_desc',maxdist='all',zip='57106'):
+def Url_Multi(page=1,pgsize='100',make='',model='',trim='',yrmin='',yrmax='',mile='',type='all',sort='best_match_desc',maxdist='all',zip='57106'):
     baseURL = 'https://www.cars.com/shopping/results/?'
     _page = 'page=' + str(page)
     if page == 0:
