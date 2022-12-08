@@ -18,11 +18,11 @@ vehicleIDs = soup.findAll('div', id=lambda x: x and x.startswith('vehicle-card-'
 
 
 IDs = []
-for i in range(len(vehicleIDs) - 1):
-    for ID in vehicleIDs[i + 1].find_all('div', id=True):  
+for i in range(len(vehicleIDs)):
+    for ID in vehicleIDs[i].find_all('div', id=True):  
         if '-lead-btns' in ID.get('id'):
             extra = ID.get('id')
-            IDs.append(extra.replace('-lead-btns',''))
+            IDs.append(extra.replace('-lead-btns','').replace('sponsored-',''))
 len(IDs)
 
 
