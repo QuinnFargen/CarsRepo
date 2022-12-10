@@ -1,6 +1,6 @@
 
 from CarsURL import Url_Multi, Url_Single
-from CarsScrap import Scrap_IDs
+from CarsScrap import Scrap_IDs, Scrap_Car
 
 
 

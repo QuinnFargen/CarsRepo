@@ -30,18 +30,19 @@ def Scrap_Car(carURL):
     listing_title = soup.find('h1', attrs={'class': 'listing-title'}).text
     listing_mileage = soup.find('div', attrs={'class': 'listing-mileage'}).text
 
-    # new_used, listing_title, listing_mileage
-
     primary_price = soup.find('span', attrs={'class': 'primary-price'}).text
     secondary_price = soup.find('span', attrs={'class': 'secondary-price price-drop'}).text
-
-    # primary_price, secondary_price
 
     fancy_desc = soup.find('dl', attrs={'class': 'fancy-description-list'})
     fancy_desc.span.decompose()
     dt = fancy_desc.find_all('dt')
     dd = fancy_desc.find_all('dd')
+
     # Put them into a dictionary
+    
+
+    # new_used, listing_title, listing_mileage
+    # primary_price, secondary_price
 
 
 

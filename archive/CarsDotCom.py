@@ -27,6 +27,44 @@ len(IDs)
 
 
 
+import requests
+from bs4 import BeautifulSoup
+
+
+carURL = 'https://www.cars.com/vehicledetail/6313112d-5f5e-4b8e-b751-57bfcd331f96/'
+
+header = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4040.128"}
+r = requests.get(carURL) #, headers=header, timeout=5)
+soup = BeautifulSoup(r.text, 'html.parser')
+
+
+new_used = soup.find('p', attrs={'class': 'new-used'}).text
+listing_title = soup.find('h1', attrs={'class': 'listing-title'}).text
+listing_mileage = soup.find('div', attrs={'class': 'listing-mileage'}).text
+
+new_used, listing_title, listing_mileage
+
+
+primary_price = soup.find('span', attrs={'class': 'primary-price'}).text
+secondary_price = soup.find('span', attrs={'class': 'secondary-price price-drop'}).text
+
+primary_price, secondary_price
+
+
+
+fancy_desc = soup.find('dl', attrs={'class': 'fancy-description-list'})
+fancy_desc.span.decompose()
+dt = fancy_desc.find_all('dt')
+dd = fancy_desc.find_all('dd')
+# Put them into a dictionary
+
+dd[1].text
+
+desc[0].text
+
+for s in fancy_desc.select('span'):
+    s.extract()
+
 len(vehicleIDs)
 
 vehicleIDs[0]
