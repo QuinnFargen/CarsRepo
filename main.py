@@ -1,8 +1,9 @@
 
 from CarsURL import Url_Multi, Url_Single
 from CarsScrap import Scrap_IDs, Scrap_Car
+from CarsDB import log_ScrapLog
 
-
+SLID = log_ScrapLog(1,1)
 
 
 
