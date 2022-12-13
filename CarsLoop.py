@@ -1,12 +1,14 @@
 
+
 from CarsURL import Url_Multi, Url_Single
 from CarsScrap import Scrap_IDs, Scrap_Car
-from CarsDB import log_ScrapLog, log_ScrapMeta, log_Vehicle
+from CarsDB import log_ScrapLog, log_ScrapMeta, log_Vehicle, get_MMTrim
 
 
 
 #Query aspects to scrap
-    #Needed
+MMT = get_MMTrim()
+
 # Log Scrap has begun , Need aspect to identify Scrap complete at end? EndDt Update?
 SLID = log_ScrapLog(1,1)
 
@@ -22,14 +24,6 @@ SMID = log_ScrapMeta(1,'CDCID', 'b2387cb6-7a74-4608-add3-274f4e578576' )
 # Check to see if new car scrapped and log into vehicles
 VID = log_Vehicle(_VIN = 'ASDLFK234234SF', _MMID = 0, _CDCID = 'b2387cb6-7a74-4608-add3-274f4e578576' )
 
-############################################################
 
-# Loop through ID's individual pages for info
-    # Get url of ID's
-Url_Single('6313112d-5f5e-4b8e-b751-57bfcd331f96')
-    #Scrap that single car's page info
-Scrap_Car('https://www.cars.com/vehicledetail/6313112d-5f5e-4b8e-b751-57bfcd331f96/')
-    #Log into meta value the attributes
-SMID = log_ScrapMeta(1,'CDCID', 'b2387cb6-7a74-4608-add3-274f4e578576' )
 
 
