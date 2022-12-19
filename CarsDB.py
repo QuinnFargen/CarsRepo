@@ -21,7 +21,20 @@ def get_MMTrim(_MMTID = 0):
     if _MMTID != 0:
         where = " WHERE M.MMTID = " + str(_MMTID)
     query = "SELECT * from MMTrim m" + where
-    return pd.read_sql_query(query, con)
+    MMT = pd.read_sql_query(query, con)
+    _make = MMT["CDCmake"].values[0]
+    _model = MMT["CDCmodel"].values[0]
+    _trim = MMT["CDCtrim"].values[0]
+    if _MMTID == 0:
+        return MMT
+    return MMT, _make, _model, _trim
+
+def get_VINs(_MMTID):
+    con, cur = get_CDC_ConCur()
+    query = "SELECT * from Vehicle v"
+    Vehicle = pd.read_sql_query(query, con)
+    return Vehicle
+
 
 
 ########################################################
@@ -43,9 +56,7 @@ def log_ScrapLog(_MMTID = 0, _VID = 1):
 def log_ScrapMeta(_VID = 1, _TagName = '', _TagValue = '', _SLID = 0):
     """
     Log new Scrap Meta
-    :param VID:
-    :param TagName:
-    :param TagValue:
+    :params VID TagName TagValue:
     :return: SMID
     """
     con, cur = get_CDC_ConCur()
@@ -57,10 +68,8 @@ def log_ScrapMeta(_VID = 1, _TagName = '', _TagValue = '', _SLID = 0):
 def log_Vehicle(_VIN = '', _MMTID = 0, _CDCID = '', _FirstDt = ''):
     """
     Log a new Vehicle
-    :param VIN:
-    :param MMTID:
+    :param VIN MMTID CDCID:
     :param FirstDt: OPTIONAL
-    :param CDCID:
     :return: VID
     """
     con, cur = get_CDC_ConCur()

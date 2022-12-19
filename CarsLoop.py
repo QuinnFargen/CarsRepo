@@ -2,15 +2,33 @@
 
 from CarsURL import Url_Multi, Url_Single
 from CarsScrap import Scrap_IDs, Scrap_Car
-from CarsDB import log_ScrapLog, log_ScrapMeta, log_Vehicle, get_MMTrim
+
+from CarsDB import log_ScrapLog, log_ScrapMeta, log_Vehicle, get_MMTrim, get_VINs
+from time import sleep
 
 
 
-#Query aspects to scrap
-MMT = get_MMTrim()
+def Loop_ManyMulti():
+    MMT_All = get_MMTrim(_MMTID=0)
+    for i in range(MMT_All.shape[0]):
+        MMT, _make, _model, _trim = get_MMTrim(i)
+        SLID = log_ScrapLog(_MMTID=i,_VID=1)
+        # Log Scrap has begun , Need aspect to identify Scrap complete at end? EndDt Update?
+        url_1st = Url_Multi(make=_make, model=_model, trim=_trim, pgsize=100)
+        IDs, NumEntry = Scrap_IDs(url_1st)
+        
 
-# Log Scrap has begun , Need aspect to identify Scrap complete at end? EndDt Update?
-SLID = log_ScrapLog(1,1)
+def Loop_ManyIDs():
+    MMT_All = get_MMTrim(_MMTID=0)
+    for i in MMT_All.MMTID.values:
+        Vehicle = get_VINs(_MMTID = i)
+        for v in range(Vehicle.shape[0]):
+            Vehicle[v]
+
+            sleep(5)
+            Url_Single()
+
+
 
 #Wrap in loop to run till out of pages - identify how many pages, by scrapping on page 1 # available
 # Get url for select car types

@@ -18,7 +18,11 @@ def Scrap_IDs(carsURL):
                 extra = ID.get('id')
                 IDs.append(extra.replace('-lead-btns','').replace('sponsored-',''))
 
-    return IDs
+    tot_entries = soup.find('span', attrs={'class': 'total-entries'}).text
+    numEntry = int(''.join(i for i in tot_entries if i.isdigit()))
+
+    return IDs, numEntry
+
 
 
 def Scrap_Car(carURL):
@@ -38,6 +42,14 @@ def Scrap_Car(carURL):
     dt = fancy_desc.find_all('dt')
     dd = fancy_desc.find_all('dd')
 
+    attr = {'new_used': new_used, 'listing_title' : listing_title, 'listing_mileage': listing_mileage, 'prim_price': primary_price, 'sec_price': secondary_price}
+    desc = {}
+    if len(dt) ==  10:
+        desc = {'Ext Color': dd[0].text, 'Int Color': dd[1].text, 'Drivetrain': dd[2].text, 'Fuel': dd[4].text, 'Trans': dd[5].text
+                , 'Engine': dd[6].text, 'VIN': dd[7].text, 'Stock': dd[8].text, 'Mileage': dd[9].text}
+
+    return attr, desc
+
     # Put them into a dictionary
 
 
@@ -53,4 +65,5 @@ def Scrap_Car(carURL):
 # cars_url = 'https://www.cars.com/shopping/results/?dealer_id=&keyword=&list_price_max=&list_price_min=&makes[]=toyota&maximum_distance=all&mileage_max=&models[]=toyota-camry&page_size=20&sort=best_match_desc&stock_type=used&trims[]=toyota-camry-se&year_max=2018&year_min=2018&zip=57193'
 # cars_url = 'https://www.cars.com/shopping/results/?page=2&page_size=20&dealer_id=&keyword=&list_price_max=&list_price_min=&makes[]=toyota&maximum_distance=all&mileage_max=&models[]=toyota-camry&sort=best_match_desc&stock_type=used&trims[]=toyota-camry-se&year_max=2018&year_min=2018&zip=57193'
 # Scrap_IDs(cars_url)
+# carURL = 'https://www.cars.com/vehicledetail/b0209b5d-5562-4396-b25e-8e77152ad30d/'
 # Scrap_Car('https://www.cars.com/vehicledetail/6313112d-5f5e-4b8e-b751-57bfcd331f96/')
