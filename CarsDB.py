@@ -40,7 +40,7 @@ def get_VINs(_MMTID):
 ########################################################
 # Insert into sql results of scrapping
 
-def log_ScrapLog(_MMTID = 0, _VID = 1):
+def log_ScrapLog(_MMTID = 0, _VID = 1, _SLID = 0):
     """
     Log a new Scrap
     :param MMTID:
@@ -48,10 +48,16 @@ def log_ScrapLog(_MMTID = 0, _VID = 1):
     :return: SLID
     """
     con, cur = get_CDC_ConCur()
+    if _SLID != 0:
+        updt = "UPDATE ScrapLog SET LogDoneDt = DATETIME() WHERE SLID = " + str(_SLID)
+        cur.execute(updt)
+        con.commit(); con.close()
+        return
     cur.execute('''INSERT INTO ScrapLog (MMTID,VID) VALUES (?, ?)''',(_MMTID,_VID))
     SLID = cur.lastrowid
     con.commit(); con.close()
     return SLID
+
 
 def log_ScrapMeta(_VID = 1, _TagName = '', _TagValue = '', _SLID = 0):
     """
