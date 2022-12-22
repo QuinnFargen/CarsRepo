@@ -8,17 +8,28 @@ from time import sleep
 
 
 
-def Loop_ManyMulti():
-    MMT_All = get_MMTrim(_MMTID=0)
+def Loop_ManyMulti(_MMTID = 0,_pgsize = 100):
+    MMT_All = get_MMTrim(_MMTID=_MMTID)                 # Gets All MMTID if ZERO
     for i in range(MMT_All.shape[0]):
-        MMT, _make, _model, _trim = get_MMTrim(i)
-        SLID = log_ScrapLog(_MMTID=i,_VID=1)
-        # Log Scrap has begun , Need aspect to identify Scrap complete at end? EndDt Update?
-        url_1st = Url_Multi(make=_make, model=_model, trim=_trim, pgsize=100)
+        MMTID = MMT_All.loc[i]['MMTID']        
+        MMT, make, model, trim = get_MMTrim(MMTID)
+        SLID = log_ScrapLog(_MMTID=MMTID,_VID=1)
+        url_1st = Url_Multi(_make=make, _model=model, _trim=trim, _pgsize=_pgsize, _yrmax = '2018', _yrmin = '2018')
         IDs, NumEntry = Scrap_IDs(url_1st)
+        log_ScrapMeta(_VID = 1, _TagName = 'NumEntry'  , _TagValue = str(NumEntry), _SLID = SLID)    
+        for n in range(round(NumEntry / _pgsize) + 1):  # Loop Thru # Entry Available / # on Pg          
+            sleep(5)                                    # Don't bombard them :)
+            url_n = Url_Multi(_page=n+1, _make=make, _model=model, _trim=trim, _pgsize=_pgsize, _yrmax = '2018', _yrmin = '2018')
+            log_ScrapMeta(_VID = 1, _TagName = 'url_' + str(n)  , _TagValue = url_n, _SLID = SLID)   
+            IDs, NumEntry = Scrap_IDs(url_n)  
+            for d in range(len(IDs)):                   # Loop Thru, Log each ID Scrapped
+                log_ScrapMeta(_VID = 1, _TagName = 'CDCID', _TagValue = IDs[d], _SLID = SLID)       
+        #Finish the Scarp & Update the LogDoneDt    
+        log_ScrapLog(_SLID = SLID)
+           
         
 
-def Loop_ManyIDs():
+def Loop_ManyIDs_ToVIN():
     MMT_All = get_MMTrim(_MMTID=0)
     for i in MMT_All.MMTID.values:
         Vehicle = get_VINs(_MMTID = i)

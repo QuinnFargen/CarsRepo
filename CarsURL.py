@@ -7,28 +7,28 @@ def addAND(param):
 def Url_Single(id):
     return 'https://www.cars.com/vehicledetail/' + id + '/'
 
-def Url_Multi(page=1,pgsize='100',make='',model='',trim='',yrmin='',yrmax='',mile='',type='all',sort='best_match_desc',maxdist='all',zip='57106'):
+def Url_Multi(_page=1,_pgsize='100',_make='',_model='',_trim='',_yrmin='',_yrmax='',_mile='',_type='all',_sort='best_match_desc',_maxdist='all',_zip='57106'):
     baseURL = 'https://www.cars.com/shopping/results/?'
-    _page = 'page=' + str(page)
-    if page == 0:
-        _page = ''
-    _pgsize = 'page_size=' + str(pgsize)
-    _make = 'makes[]=' + make
-    _model = 'models[]=' + model
-    _trim = 'trims[]=' + trim
-    _yrmin = 'year_max=' + yrmin
-    _yrmax = 'year_min=' + yrmax
+    page = 'page=' + str(_page)
+    if _page == 0:
+        page = ''
+    pgsize = 'page_size=' + str(_pgsize)
+    make = 'makes[]=' + _make
+    model = 'models[]=' + _model
+    trim = 'trims[]=' + _trim
+    yrmin = 'year_max=' + _yrmin
+    yrmax = 'year_min=' + _yrmax
 
-    _mile = 'mileage_max=' + mile  # 10000, by 10K, 100000, 150000, 200000, 250000, blank for any
-    _type = 'stock_type=' + type # all, used, new_cpo, new, cpo
-    _sort = 'sort=' + sort  # best_match_desc, list_price, list_price_desc, mileage, mileage_desc, distance, best_deal, year_desc, year, listed_at_desc, listed_at
-    _maxdist = 'maximum_distance=' + maxdist   # all, 500, 250, 100, 50
+    mile = 'mileage_max=' + _mile  # 10000, by 10K, 100000, 150000, 200000, 250000, blank for any
+    type = 'stock_type=' + _type # all, used, new_cpo, new, cpo
+    sort = 'sort=' + _sort  # best_match_desc, list_price, list_price_desc, mileage, mileage_desc, distance, best_deal, year_desc, year, listed_at_desc, listed_at
+    maxdist = 'maximum_distance=' + _maxdist   # all, 500, 250, 100, 50
 
 
-    _zip = 'zip=' + zip
-    websiteURL = addAND(_page) + addAND(_pgsize) + addAND(_sort) + addAND(_maxdist)
-    carURL = addAND(_make) + addAND(_model) + addAND(_trim) + addAND(_yrmin) + addAND(_yrmax) + addAND(_mile) + addAND(_type)
-    return baseURL + websiteURL + carURL  + _zip
+    zip = 'zip=' + _zip
+    websiteURL = addAND(page) + addAND(pgsize) + addAND(sort) + addAND(maxdist)
+    carURL = addAND(make) + addAND(model) + addAND(trim) + addAND(yrmin) + addAND(yrmax) + addAND(mile) + addAND(type)
+    return baseURL + websiteURL + carURL  + zip
 
 
 
