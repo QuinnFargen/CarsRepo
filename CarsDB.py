@@ -1,7 +1,9 @@
 
 import sqlite3
 import pandas as pd
+from datetime import datetime
 
+ 
 
 
 ########################################################
@@ -25,9 +27,13 @@ def get_MMTrim(_MMTID = 0):
     _make = MMT["CDCmake"].values[0]
     _model = MMT["CDCmodel"].values[0]
     _trim = MMT["CDCtrim"].values[0]
+    _minYr = MMT["minYr"].values[0]
+    _maxYr = MMT["maxYr"].values[0]
+    if _maxYr is None:
+        _maxYr = datetime.now().year
     if _MMTID == 0:
         return MMT
-    return MMT, _make, _model, _trim
+    return MMT, _make, _model, _trim, _minYr, _maxYr
 
 def get_VINs(_MMTID):
     con, cur = get_CDC_ConCur()
