@@ -1,10 +1,10 @@
 
 
-from CarsLoop import Loop_ManyMulti
+from CarsURL import Url_Multi, Url_Single
+from CarsScrap import Scrap_IDs, Scrap_Car
 
-
-
-Loop_ManyMulti()  
+from CarsDB import log_ScrapLog, log_ScrapMeta, log_Vehicle, get_MMTrim, get_VINs
+from time import sleep
 
 
 
