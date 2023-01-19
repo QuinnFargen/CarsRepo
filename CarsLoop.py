@@ -40,9 +40,11 @@ def Loop_MMTID_GetCDCID(_MMTID=0,_pgsize=100):
         #Finish the Scarp & Update the LogDoneDt    
         log_ScrapLog(_SLID = SLID)
            
-        
 
-def Loop_ManyIDs_ToVIN():
+# Go thru new Meta CDCIDs, add to Vehicle table       
+
+
+def Loop_CDCID_ToVIN():
     MMT_All = get_MMTrim(_MMTID=0)
     for i in MMT_All.MMTID.values:
         Vehicle = get_VINs(_MMTID = i)
@@ -53,8 +55,12 @@ def Loop_ManyIDs_ToVIN():
             Url_Single()
 
 
-def Loop_ManyIDs_ToVIN():
-    pass
+# Go thru new VIN Meta & Create new MMTID, UPDATE MMTID of VIN
+
+
+
+
+
 
 
 # #Wrap in loop to run till out of pages - identify how many pages, by scrapping on page 1 # available
