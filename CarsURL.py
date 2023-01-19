@@ -15,9 +15,15 @@ def Url_Multi(_page=1,_pgsize='100',_make='',_model='',_trim='',_yrmin='',_yrmax
     pgsize = 'page_size=' + str(_pgsize)
     make = 'makes[]=' + _make
     model = 'models[]=' + _model
-    trim = 'trims[]=' + _trim
-    yrmin = 'year_max=' + _yrmin
-    yrmax = 'year_min=' + _yrmax
+    if _trim is None:
+        trim = ''
+    else:
+        trim = 'trims[]=' + _trim
+    if _yrmin == '0':
+        yrmin = ''; yrmax = ''
+    else:
+        yrmin = 'year_max=' + _yrmin
+        yrmax = 'year_min=' + _yrmax
 
     mile = 'mileage_max=' + _mile  # 10000, by 10K, 100000, 150000, 200000, 250000, blank for any
     type = 'stock_type=' + _type # all, used, new_cpo, new, cpo

@@ -48,10 +48,8 @@ def get_VINs(_MMTID):
 
 def log_ScrapLog(_MMTID = 0, _VID = 1, _SLID = 0):
     """
-    Log a new Scrap
-    :param MMTID:
-    :param VID:
-    :return: SLID
+    Log a new Scrap. 
+    :param _MMTID(0), _VID(1), _SLID(0)
     """
     con, cur = get_CDC_ConCur()
     if _SLID != 0:
@@ -65,7 +63,7 @@ def log_ScrapLog(_MMTID = 0, _VID = 1, _SLID = 0):
     return SLID
 
 
-def log_ScrapMeta(_VID = 1, _TagName = '', _TagValue = '', _SLID = 0):
+def log_ScrapMeta(_VID = 1, _TagName = '', _TagValue = '', _SLID = 0, _WantSMID = 0):
     """
     Log new Scrap Meta
     :params VID TagName TagValue:
@@ -75,7 +73,8 @@ def log_ScrapMeta(_VID = 1, _TagName = '', _TagValue = '', _SLID = 0):
     cur.execute('''INSERT INTO ScrapMeta (VID,TagName,TagValue,SLID) VALUES (?,?,?,?)''',(_VID,_TagName,_TagValue,_SLID))
     SMID = cur.lastrowid
     con.commit(); con.close()
-    return SMID
+    if _WantSMID == 1:
+        return SMID
 
 def log_Vehicle(_VIN = '', _MMTID = 0, _CDCID = '', _FirstDt = ''):
     """

@@ -7,15 +7,24 @@ from CarsDB import log_ScrapLog, log_ScrapMeta, log_Vehicle, get_MMTrim, get_VIN
 from time import sleep
 
 
+def check_None_minyr(_minyr=0,_maxyr=0):
+    if _minyr is None:
+        return range(0,1)
+    else:
+        return range(_minyr,_maxyr)
 
-def Loop_ManyMulti(_MMTID = 0,_pgsize = 100):
+def Loop_MMTID_GetCDCID(_MMTID=0,_pgsize=100):
+    """
+    Loop thru passed MMTID or all active, log CDCIDs for active listings
+    Param:  _MMTID (Def=0), _pgsize (Def=100)
+    Return: None
+    """
     MMT_All = get_MMTrim(_MMTID=_MMTID)                     # Gets All MMTID if ZERO
     for m in range(MMT_All.shape[0]):
         MMTID = MMT_All.loc[m]['MMTID']        
         MMT, make, model, trim, minyr, maxyr = get_MMTrim(MMTID)
-        print(MMT)
-        SLID = log_ScrapLog(_MMTID=MMTID,_VID=1)
-        yrs = range(minyr,maxyr)
+        SLID = log_ScrapLog(_MMTID=MMTID,_VID=1)            #Log Start of scrap, get SLID to tie other logs with
+        yrs = check_None_minyr(_minyr=minyr, _maxyr=maxyr)
         for y in range(len(yrs)):
             yr = str(yrs[y])
             url_1st = Url_Multi(_make=make, _model=model, _trim=trim, _pgsize=_pgsize, _yrmax = yr, _yrmin = yr)
