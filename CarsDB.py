@@ -18,6 +18,11 @@ def get_CDC_ConCur():
 # Query from sql what cars we want to scrap
 
 def get_MMTrim(_MMTID = 0):
+    """
+    Get MMTrim all Columns with additional, MMTID optional WHERE.
+    :param _MMTID(0)
+    :return MMT(pd),_make,_model,_trim,_minYr,_maxYr
+    """
     con, cur = get_CDC_ConCur()
     where = ""
     if _MMTID != 0:
@@ -35,6 +40,34 @@ def get_MMTrim(_MMTID = 0):
         return MMT
     return MMT, _make, _model, _trim, _minYr, _maxYr
 
+def get_ScrapLog_SLID(_MMTID = 0):
+    """
+    Get ScrapLog all Columns, MMTID optional WHERE.
+    :param _MMTID(0)
+    :ScrapLog(pd)
+    """
+    con, cur = get_CDC_ConCur()
+    where = " WHERE S.IDsDoneDt IS NULL"
+    if _MMTID != 0:
+        where += " AND S.MMTID = " + str(_MMTID)
+    query = "SELECT * from ScrapLog S" + where
+    ScrapLog = pd.read_sql_query(query, con)
+    return ScrapLog
+
+def get_Meta_SLIDTagname(_SLID=0,_TagName=''):
+    """
+    Get ScrapMeta (SMID & TagValue), WHERE Not Optional.
+    :param _SLID(0),_TagName('')
+    :ScrapMeta(pd)
+    """
+    con, cur = get_CDC_ConCur()
+    if _SLID != 0 and _TagName != '':
+        where = " WHERE S.SLID = " + str(_SLID) + " AND S.TagName = '" + _TagName + "'"
+        query = "SELECT S.SMID, S.TagValue from ScrapMeta S" + where
+        ScrapMeta = pd.read_sql_query(query, con)
+        return ScrapMeta
+
+
 def get_VINs(_MMTID):
     con, cur = get_CDC_ConCur()
     query = "SELECT * from Vehicle v"
@@ -50,6 +83,7 @@ def log_ScrapLog(_MMTID = 0, _VID = 1, _SLID = 0):
     """
     Log a new Scrap. 
     :param _MMTID(0), _VID(1), _SLID(0)
+    :return SLID
     """
     con, cur = get_CDC_ConCur()
     if _SLID != 0:

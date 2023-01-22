@@ -3,7 +3,7 @@
 from CarsURL import Url_Multi, Url_Single
 from CarsScrap import Scrap_IDs, Scrap_Car
 
-from CarsDB import log_ScrapLog, log_ScrapMeta, log_Vehicle, get_MMTrim, get_VINs
+from CarsDB import log_ScrapLog, log_ScrapMeta, log_Vehicle, get_MMTrim, get_VINs, get_ScrapLog_SLID, get_Meta_SLIDTagname
 from time import sleep
 
 
@@ -21,7 +21,7 @@ def Loop_MMTID_GetCDCID(_MMTID=0,_pgsize=100):
     """
     MMT_All = get_MMTrim(_MMTID=_MMTID)                     # Gets All MMTID if ZERO
     for m in range(MMT_All.shape[0]):
-        MMTID = MMT_All.loc[m]['MMTID']        
+        MMTID = int(MMT_All.loc[m]['MMTID'])
         MMT, make, model, trim, minyr, maxyr = get_MMTrim(MMTID)
         SLID = log_ScrapLog(_MMTID=MMTID,_VID=1)            #Log Start of scrap, get SLID to tie other logs with
         yrs = check_None_minyr(_minyr=minyr, _maxyr=maxyr)
@@ -42,7 +42,10 @@ def Loop_MMTID_GetCDCID(_MMTID=0,_pgsize=100):
            
 
 # Go thru new Meta CDCIDs, add to Vehicle table       
-
+def Loop_SLID_ToVID():
+    NeedIDd = get_ScrapLog_SLID()
+    for n in range(NeedIDd.shape[0]):
+        SLID = NeedIDd["SLID"].values[n]
 
 def Loop_CDCID_ToVIN():
     MMT_All = get_MMTrim(_MMTID=0)
