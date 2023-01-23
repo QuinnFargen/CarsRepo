@@ -56,21 +56,28 @@ def get_ScrapLog_SLID(_MMTID = 0):
 
 def get_Meta_SLIDTagname(_SLID=0,_TagName=''):
     """
-    Get ScrapMeta (SMID & TagValue), WHERE Not Optional.
+    Get ScrapMeta (SMID, TagValue & InsertDate), WHERE Not Optional.
     :param _SLID(0),_TagName('')
     :ScrapMeta(pd)
     """
     con, cur = get_CDC_ConCur()
     if _SLID != 0 and _TagName != '':
         where = " WHERE S.SLID = " + str(_SLID) + " AND S.TagName = '" + _TagName + "'"
-        query = "SELECT S.SMID, S.TagValue from ScrapMeta S" + where
+        query = "SELECT S.SMID, S.TagValue, S.InsertDate from ScrapMeta S" + where
         ScrapMeta = pd.read_sql_query(query, con)
         return ScrapMeta
 
 
-def get_VINs(_MMTID):
+def get_Vehicle_VinCdcID(_VIN='',_CDCID=''):
     con, cur = get_CDC_ConCur()
-    query = "SELECT * from Vehicle v"
+    where = ''
+    if _VIN == '' and _CDCID == '':
+        return
+    elif _VIN != '':
+        where += "v.VIN = '" + _VIN + "'"
+    elif _CDCID != '':
+        where += "v.CDCID = '" + _CDCID + "'"
+    query = "SELECT * from Vehicle v WHERE " + where
     Vehicle = pd.read_sql_query(query, con)
     return Vehicle
 
@@ -110,21 +117,42 @@ def log_ScrapMeta(_VID = 1, _TagName = '', _TagValue = '', _SLID = 0, _WantSMID 
     if _WantSMID == 1:
         return SMID
 
-def log_Vehicle(_VIN = '', _MMTID = 0, _CDCID = '', _FirstDt = ''):
+def log_Vehicle(_IsUpdate=0,_VIN='',_MMTID='',_CDCID='',_LastScrapDt='',_IsActive=1):
     """
-    Log a new Vehicle
-    :param VIN MMTID CDCID:
-    :param FirstDt: OPTIONAL
+    Log a new Vehicle, or Update LastScrapDt/IsActive/VIN/MMTID
+    :param _CDCID:
+    :param OPTIONAL: _IsUpdate,_VIN,_MMTID,_LastScrapDt,_IsActive
     :return: VID
     """
     con, cur = get_CDC_ConCur()
-    if _FirstDt != '':  # Insert FirstDt if given
-        cur.execute('''INSERT INTO Vehicle (VIN,MMTID,FirstDt,CDCID) VALUES (?, ?, ?, ?)''', (_VIN,_MMTID,_FirstDt,_CDCID) )
-    else:               # Else let default getdate()
-        cur.execute('''INSERT INTO Vehicle (VIN,MMTID,CDCID) VALUES (?, ?, ?)''', (_VIN,_MMTID,_CDCID) )        
+    if _IsUpdate == 0:              # Only Non-Update is new Update CDCID
+        cur.execute('''INSERT INTO Vehicle (CDCID,FirstDt) VALUES (?,?)''', (_CDCID,_LastScrapDt) )    
+    elif _IsActive == 0:            # Update No Longer Active Vehicle        
+        cur.execute(  ''' UPDATE Vehicle SET IsActive = 0, LastScrapDt = ? WHERE CDCID = ? ''', (_LastScrapDt,_CDCID) )                                          
+    elif _LastScrapDt != '':        # Update newest ScrapDt
+        cur.execute(  ''' UPDATE Vehicle SET LastScrapDt = ? WHERE CDCID = ? ''', (_LastScrapDt,_CDCID) )   
+    elif _VIN != '':
+        cur.execute(  ''' UPDATE Vehicle SET VIN = ? WHERE CDCID = ? ''', (_VIN,_CDCID) )   
+    elif _MMTID != '':
+        cur.execute(  ''' UPDATE Vehicle SET MMTID = ? WHERE CDCID = ? ''', (_MMTID,_CDCID) )           
     VID = cur.lastrowid
     con.commit(); con.close()
     return VID
+
+
+
+
+
+
+
+# log_Vehicle(_CDCID = 'e499140e-82d3-4a47-829c-84edce1a22',_LastScrapDt='2022-12-22 04:47:40')
+# log_Vehicle(_IsUpdate=1,_CDCID = 'e499140e-82d3-4a47-829c-84edf6ce1a22',_LastScrapDt='2022-12-22 04:47:01')
+# log_Vehicle(_IsUpdate=1,_IsActive=0,_CDCID = 'e499140e-82d3-4a47-829c-84edf6ce1a22',_LastScrapDt='2022-12-22 04:47:01')
+
+
+
+
+
 
 
 

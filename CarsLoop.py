@@ -3,7 +3,7 @@
 from CarsURL import Url_Multi, Url_Single
 from CarsScrap import Scrap_IDs, Scrap_Car
 
-from CarsDB import log_ScrapLog, log_ScrapMeta, log_Vehicle, get_MMTrim, get_VINs, get_ScrapLog_SLID, get_Meta_SLIDTagname
+from CarsDB import log_ScrapLog, log_ScrapMeta, log_Vehicle, get_MMTrim, get_Vehicle_VinCdcID, get_ScrapLog_SLID, get_Meta_SLIDTagname
 from time import sleep
 
 
@@ -46,6 +46,12 @@ def Loop_SLID_ToVID():
     NeedIDd = get_ScrapLog_SLID()
     for n in range(NeedIDd.shape[0]):
         SLID = NeedIDd["SLID"].values[n]
+        Meta = get_Meta_SLIDTagname(SLID, 'CDCID')
+        for m in range(Meta.shape[0]):
+            #Check if exists, if then log updateDate
+            CDCID = Meta["TagValue"].values[0]
+            Vehicle = get_Vehicle_VinCdcID(_CDCID=CDCID)
+            #Else insert new to Vehicle
 
 def Loop_CDCID_ToVIN():
     MMT_All = get_MMTrim(_MMTID=0)
