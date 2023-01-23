@@ -29,7 +29,7 @@ def Scrap_IDs(carURL):
 
 def Scrap_Car(carURL):
     soup = get_soup(carURL)
-    attr = {};desc = {}
+    attr = {}
 
     # When Car Not Listed:
         # <p class="sds-notification__desc">Sorry, this vehicle is no longer available.</p>
@@ -37,23 +37,30 @@ def Scrap_Car(carURL):
         return attr, desc
 
     # Pull out individual values
-    new_used = soup.find('p', attrs={'class': 'new-used'}).text
-    listing_title = soup.find('h1', attrs={'class': 'listing-title'}).text
-    listing_mileage = soup.find('div', attrs={'class': 'listing-mileage'}).text
-    primary_price = soup.find('span', attrs={'class': 'primary-price'}).text
-    secondary_price = soup.find('span', attrs={'class': 'secondary-price price-drop'}).text
+    attr["new_used"] = soup.find('p', attrs={'class': 'new-used'}).text
+    attr["listing_title"] = soup.find('h1', attrs={'class': 'listing-title'}).text
+    attr["listing_mileage"] = soup.find('div', attrs={'class': 'listing-mileage'}).text
+    attr["primary_price"] = soup.find('span', attrs={'class': 'primary-price'}).text
+    if soup.find('span', attrs={'class': 'secondary-price price-drop'}) is not None:
+        attr["secondary_price"] = soup.find('span', attrs={'class': 'secondary-price price-drop'}).text
+
     # Nested values find
     fancy_desc = soup.find('dl', attrs={'class': 'fancy-description-list'})
     fancy_desc.span.decompose()    
     dt = fancy_desc.find_all('dt')
     dd = fancy_desc.find_all('dd')
     # Ind and Nested values into dicts
-    attr = {'new_used': new_used, 'listing_title' : listing_title, 'listing_mileage': listing_mileage, 'prim_price': primary_price, 'sec_price': secondary_price}
     if len(dt) ==  10:
-        desc = {'Ext Color': dd[0].text, 'Int Color': dd[1].text, 'Drivetrain': dd[2].text, 'Fuel': dd[4].text, 'Trans': dd[5].text, 'Engine': dd[6].text, 'VIN': dd[7].text, 'Stock': dd[8].text, 'Mileage': dd[9].text}
-    return attr, desc
-
-
+        attr["Ext_Color"] = dd[0].text
+        attr["Int_Color"] = dd[1].text
+        attr["Drivetrain"] = dd[2].text
+        attr["Fuel"] = dd[4].text
+        attr["Trans"] = dd[5].text
+        attr["Engine"] = dd[6].text
+        attr["VIN"] = dd[7].text
+        attr["Stock"] = dd[8].text
+        attr["Mileage"] = dd[9].text
+    return attr
 
 
 # cars_url = 'https://www.cars.com/shopping/results/?dealer_id=&keyword=&list_price_max=&list_price_min=&makes[]=toyota&maximum_distance=all&mileage_max=&models[]=toyota-camry&page_size=20&sort=best_match_desc&stock_type=used&trims[]=toyota-camry-se&year_max=2018&year_min=2018&zip=57193'
@@ -65,5 +72,5 @@ carURL = 'https://www.cars.com/vehicledetail/3cbf49c1-3338-4c7b-b3a9-9b3862230f1
     #BADDDDD
 carURL = 'https://www.cars.com/vehicledetail/6313112d-5f5e-4b8e-b751-57bfcd331f96/'
 
-attr, desc = Scrap_Car(carURL)
-attr, desc
+attr = Scrap_Car(carURL)
+attr
