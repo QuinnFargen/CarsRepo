@@ -13,7 +13,7 @@ def check_None_minyr(_minyr=0,_maxyr=0):
     else:
         return range(_minyr,_maxyr)
 
-def Loop_MMTID_GetCDCID(_MMTID=0,_pgsize=100):
+def Loop_MMTID_GetCDCID(_MMTID=0,_OnlyMM=0,_pgsize=100):
     """
     Loop thru passed MMTID or all active, log CDCIDs for active listings
     Param:  _MMTID (Def=0), _pgsize (Def=100)
@@ -46,22 +46,32 @@ def Loop_SLID_ToVID():
     NeedIDd = get_ScrapLog_SLID()
     for n in range(NeedIDd.shape[0]):
         SLID = NeedIDd["SLID"].values[n]
+        MMTID = str(NeedIDd["MMTID"].values[n])
         Meta = get_Meta_SLIDTagname(SLID, 'CDCID')
         for m in range(Meta.shape[0]):
             #Check if exists, if then log updateDate
-            CDCID = Meta["TagValue"].values[0]
+            CDCID = Meta["TagValue"].values[m]
+            LastScrapDt = Meta["InsertDate"].values[m]
             Vehicle = get_Vehicle_VinCdcID(_CDCID=CDCID)
-            #Else insert new to Vehicle
+            if Vehicle.shape[0] != 0:
+                log_Vehicle(_IsUpdate=1,_CDCID=CDCID,_LastScrapDt=LastScrapDt)
+            else:       #Else insert new to Vehicle
+                log_Vehicle(_CDCID=CDCID,_MMTID=MMTID,_LastScrapDt=LastScrapDt)
+        # Update done
+        log_ScrapLog(_SLID=SLID,_IDsDone=1)
+
 
 def Loop_CDCID_ToVIN():
-    MMT_All = get_MMTrim(_MMTID=0)
-    for i in MMT_All.MMTID.values:
-        Vehicle = get_VINs(_MMTID = i)
-        for v in range(Vehicle.shape[0]):
-            Vehicle[v]
+    NeedVIN = get_Vehicle_VinCdcID(_VinNULL=1)
+    #Start a Log
+    for v in range(NeedVIN.shape[0]):
+        sleep(5)
+        CDCID = NeedVIN["CDCID"].values[v]
+        url = Url_Single(CDCID)
+        attr, desc = Scrap_Car(url)
 
-            sleep(5)
-            Url_Single()
+    #End 
+
 
 
 # Go thru new VIN Meta & Create new MMTID, UPDATE MMTID of VIN

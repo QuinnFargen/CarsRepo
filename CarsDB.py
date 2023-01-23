@@ -17,7 +17,7 @@ def get_CDC_ConCur():
 ########################################################
 # Query from sql what cars we want to scrap
 
-def get_MMTrim(_MMTID = 0):
+def get_MMTrim(_MMTID = 0,_NonTrim=0):
     """
     Get MMTrim all Columns with additional, MMTID optional WHERE.
     :param _MMTID(0)
@@ -27,7 +27,9 @@ def get_MMTrim(_MMTID = 0):
     where = ""
     if _MMTID != 0:
         where = " WHERE M.MMTID = " + str(_MMTID)
-    query = "SELECT * from MMTrim m" + where
+        query = "SELECT * from MMTrim m" + where
+    else:
+        query = "SELECT * from MakeModel m" + where
     MMT = pd.read_sql_query(query, con)
     _make = MMT["CDCmake"].values[0]
     _model = MMT["CDCmodel"].values[0]
@@ -68,10 +70,12 @@ def get_Meta_SLIDTagname(_SLID=0,_TagName=''):
         return ScrapMeta
 
 
-def get_Vehicle_VinCdcID(_VIN='',_CDCID=''):
+def get_Vehicle_VinCdcID(_VIN='',_CDCID='',_VinNULL=0):
     con, cur = get_CDC_ConCur()
     where = ''
-    if _VIN == '' and _CDCID == '':
+    if _VinNULL == 1:
+        where += "v.VIN IS NULL"
+    elif _VIN == '' and _CDCID == '':
         return
     elif _VIN != '':
         where += "v.VIN = '" + _VIN + "'"
@@ -86,15 +90,20 @@ def get_Vehicle_VinCdcID(_VIN='',_CDCID=''):
 ########################################################
 # Insert into sql results of scrapping
 
-def log_ScrapLog(_MMTID = 0, _VID = 1, _SLID = 0):
+def log_ScrapLog(_MMTID = 0, _VID = 1, _SLID = 0, _IDsDone=0):
     """
     Log a new Scrap. 
     :param _MMTID(0), _VID(1), _SLID(0)
     :return SLID
     """
     con, cur = get_CDC_ConCur()
-    if _SLID != 0:
+    if _SLID != 0 and _IDsDone == 0:
         updt = "UPDATE ScrapLog SET LogDoneDt = DATETIME() WHERE SLID = " + str(_SLID)
+        cur.execute(updt)
+        con.commit(); con.close()
+        return
+    if _SLID != 0 and _IDsDone == 1:
+        updt = "UPDATE ScrapLog SET IDsDoneDt = DATETIME() WHERE SLID = " + str(_SLID)
         cur.execute(updt)
         con.commit(); con.close()
         return
@@ -117,16 +126,16 @@ def log_ScrapMeta(_VID = 1, _TagName = '', _TagValue = '', _SLID = 0, _WantSMID 
     if _WantSMID == 1:
         return SMID
 
-def log_Vehicle(_IsUpdate=0,_VIN='',_MMTID='',_CDCID='',_LastScrapDt='',_IsActive=1):
+def log_Vehicle(_IsUpdate=0,_VIN='',_MMTID='',_CDCID='',_LastScrapDt='',_IsActive=1,_RetVID=0):
     """
     Log a new Vehicle, or Update LastScrapDt/IsActive/VIN/MMTID
     :param _CDCID:
-    :param OPTIONAL: _IsUpdate,_VIN,_MMTID,_LastScrapDt,_IsActive
+    :param OPTIONAL: _IsUpdate,_VIN,_MMTID,_LastScrapDt,_IsActive,_RetVID
     :return: VID
     """
     con, cur = get_CDC_ConCur()
     if _IsUpdate == 0:              # Only Non-Update is new Update CDCID
-        cur.execute('''INSERT INTO Vehicle (CDCID,FirstDt) VALUES (?,?)''', (_CDCID,_LastScrapDt) )    
+        cur.execute('''INSERT INTO Vehicle (CDCID,MMTID,LastScrapDt) VALUES (?,?,?)''', (_CDCID,_MMTID,_LastScrapDt) )    
     elif _IsActive == 0:            # Update No Longer Active Vehicle        
         cur.execute(  ''' UPDATE Vehicle SET IsActive = 0, LastScrapDt = ? WHERE CDCID = ? ''', (_LastScrapDt,_CDCID) )                                          
     elif _LastScrapDt != '':        # Update newest ScrapDt
@@ -137,7 +146,8 @@ def log_Vehicle(_IsUpdate=0,_VIN='',_MMTID='',_CDCID='',_LastScrapDt='',_IsActiv
         cur.execute(  ''' UPDATE Vehicle SET MMTID = ? WHERE CDCID = ? ''', (_MMTID,_CDCID) )           
     VID = cur.lastrowid
     con.commit(); con.close()
-    return VID
+    if _RetVID ==1:
+        return VID
 
 
 
