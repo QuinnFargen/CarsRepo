@@ -1,12 +1,12 @@
 
 
-from CarsLoop import Loop_MMTID_GetCDCID
+from CarsLoop import Loop_MMTID_GetCDCID, Loop_SLID_ToVID
 
 
 # Go looking for new Listings:
 Loop_MMTID_GetCDCID()  
-    # Clean up new data
-
+# Clean up new data
+Loop_SLID_ToVID()
 # Make individual calls update listings/check still exist
 
 

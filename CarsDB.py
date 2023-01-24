@@ -103,7 +103,7 @@ def log_ScrapLog(_MMTID = 0, _VID = 1, _SLID = 0, _IDsDone=0):
         con.commit(); con.close()
         return
     if _SLID != 0 and _IDsDone == 1:
-        updt = "UPDATE ScrapLog SET IDsDoneDt = DATETIME() WHERE SLID = " + str(_SLID)
+        updt = "UPDATE ScrapLog SET IDsDoneDt = DATETIME(), LogDoneDt = DATETIME() WHERE SLID = " + str(_SLID)
         cur.execute(updt)
         con.commit(); con.close()
         return
