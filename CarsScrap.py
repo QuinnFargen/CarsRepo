@@ -30,37 +30,34 @@ def Scrap_IDs(carURL):
 def Scrap_Car(carURL):
     soup = get_soup(carURL)
     attr = {}
-
     # When Car Not Listed:
         # <p class="sds-notification__desc">Sorry, this vehicle is no longer available.</p>
     if soup.find('p', attrs={'class': 'sds-notification__desc'}) is not None:
-        return attr, desc
+        if soup.find('p', attrs={'class': 'sds-notification__desc'}).text == 'Sorry, this vehicle is no longer available.':
+            return {'Status': 'No Longer'}
 
-    # Pull out individual values
+        # Pull out individual values
     attr["new_used"] = soup.find('p', attrs={'class': 'new-used'}).text
     attr["listing_title"] = soup.find('h1', attrs={'class': 'listing-title'}).text
     attr["listing_mileage"] = soup.find('div', attrs={'class': 'listing-mileage'}).text
     attr["primary_price"] = soup.find('span', attrs={'class': 'primary-price'}).text
     if soup.find('span', attrs={'class': 'secondary-price price-drop'}) is not None:
         attr["secondary_price"] = soup.find('span', attrs={'class': 'secondary-price price-drop'}).text
-
     # Nested values find
     fancy_desc = soup.find('dl', attrs={'class': 'fancy-description-list'})
-    fancy_desc.span.decompose()    
+    if fancy_desc.find('span') is not None:
+        fancy_desc.span.decompose()    
     dt = fancy_desc.find_all('dt')
     dd = fancy_desc.find_all('dd')
     # Ind and Nested values into dicts
-    if len(dt) ==  10:
-        attr["Ext_Color"] = dd[0].text
-        attr["Int_Color"] = dd[1].text
-        attr["Drivetrain"] = dd[2].text
-        attr["Fuel"] = dd[4].text
-        attr["Trans"] = dd[5].text
-        attr["Engine"] = dd[6].text
-        attr["VIN"] = dd[7].text
-        attr["Stock"] = dd[8].text
-        attr["Mileage"] = dd[9].text
+    known = ['Exterior color', 'Interior color', 'Drivetrain', 'Fuel type', 'Transmission', 'Engine', 'VIN', 'Mileage']
+    label = ['Ext_Color','Int_Color','Drivetrain','Fuel','Trans','Engine','VIN','Mileage']
+    for d in range(len(dt)):
+        if dt[d].text in known:
+            i = known.index(dt[d].text)
+            attr[label[i]] = dd[d].text.strip()
     return attr
+
 
 
 # cars_url = 'https://www.cars.com/shopping/results/?dealer_id=&keyword=&list_price_max=&list_price_min=&makes[]=toyota&maximum_distance=all&mileage_max=&models[]=toyota-camry&page_size=20&sort=best_match_desc&stock_type=used&trims[]=toyota-camry-se&year_max=2018&year_min=2018&zip=57193'

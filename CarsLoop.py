@@ -74,19 +74,22 @@ def Loop_Vehicle_AddVIN():
     """
     NeedVIN = get_Vehicle_VinCdcID(_VinNULL=1)
     for v in range(NeedVIN.shape[0]):
-        sleep(5)    #Be Nice to CDC
+        sleep(3)    #Be Nice to CDC
         CDCID = NeedVIN["CDCID"].values[v]
         VID = str(NeedVIN["VID"].values[v])
         MMTID = str(NeedVIN["MMTID"].values[v])
         SLID = log_ScrapLog(_MMTID=MMTID,_VID=VID)            #Log Start of scrap, get SLID to tie other logs with
         url = Url_Single(CDCID)
-        attr = Scrap_Car(url)     
+        attr = Scrap_Car(url)  
+        print(url); print(attr)   
+        if attr == {'Status': 'No Longer'}:
+            log_Vehicle(_CDCID=CDCID,_IsActive=0)
         for a in sorted(attr):
             log_ScrapMeta(_VID = VID, _SLID = SLID, _TagName = a, _TagValue = attr[a])   
             if a == 'VIN':
                 log_Vehicle(_IsUpdate=1,_CDCID=CDCID,_VIN=attr[a])
         #Update VID with VIN Scrapped
-        log_ScrapLog(_SLID = SLID)                          #Finish the Scarp & Update the LogDoneDt    
+        log_ScrapLog(_SLID = SLID,_IDsDone=1)                          #Finish the Scarp & Update the LogDoneDt    
 
 
 # Go thru new VIN Meta & Create new MMTID, UPDATE MMTID of VIN
