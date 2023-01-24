@@ -43,6 +43,11 @@ def Loop_MMTID_GetCDCID(_MMTID=0,_OnlyMM=0,_pgsize=100):
 
 # Go thru new Meta CDCIDs, add to Vehicle table       
 def Loop_SLID_ToVID():
+    """
+    Loop thru SLID of new CDCID's that need to be added to Vehicle
+    Param:  None
+    Return: None
+    """
     NeedIDd = get_ScrapLog_SLID()
     for n in range(NeedIDd.shape[0]):
         SLID = NeedIDd["SLID"].values[n]
@@ -61,17 +66,27 @@ def Loop_SLID_ToVID():
         log_ScrapLog(_SLID=SLID,_IDsDone=1)
 
 
-def Loop_CDCID_ToVIN():
+def Loop_Vehicle_AddVIN():
+    """
+    Loop thru Vehicle that need VIN, ind url call meta data logged.
+    Param:  None
+    Return: None
+    """
     NeedVIN = get_Vehicle_VinCdcID(_VinNULL=1)
-    #Start a Log
     for v in range(NeedVIN.shape[0]):
-        sleep(5)
+        sleep(5)    #Be Nice to CDC
         CDCID = NeedVIN["CDCID"].values[v]
+        VID = str(NeedVIN["VID"].values[v])
+        MMTID = str(NeedVIN["MMTID"].values[v])
+        SLID = log_ScrapLog(_MMTID=MMTID,_VID=VID)            #Log Start of scrap, get SLID to tie other logs with
         url = Url_Single(CDCID)
-        attr, desc = Scrap_Car(url)
-
-    #End 
-
+        attr = Scrap_Car(url)     
+        for a in sorted(attr):
+            log_ScrapMeta(_VID = VID, _SLID = SLID, _TagName = a, _TagValue = attr[a])   
+            if a == 'VIN':
+                log_Vehicle(_IsUpdate=1,_CDCID=CDCID,_VIN=attr[a])
+        #Update VID with VIN Scrapped
+        log_ScrapLog(_SLID = SLID)                          #Finish the Scarp & Update the LogDoneDt    
 
 
 # Go thru new VIN Meta & Create new MMTID, UPDATE MMTID of VIN
