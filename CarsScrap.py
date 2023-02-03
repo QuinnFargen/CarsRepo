@@ -1,11 +1,13 @@
 
-import requests
+import config
 from bs4 import BeautifulSoup
+from scraper_api import ScraperAPIClient
+
 
 def get_soup(carURL):
-    header = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4040.128"}
-    r = requests.get(carURL) #, headers=header, timeout=5)
-    return BeautifulSoup(r.text, 'html.parser')
+    client = ScraperAPIClient(config.scraper_APIKey)
+    result = client.get(url = carURL).text
+    return BeautifulSoup(result, 'html.parser')
 
 def Scrap_IDs(carURL):
     soup = get_soup(carURL)
@@ -65,9 +67,10 @@ def Scrap_Car(carURL):
 # Scrap_IDs(cars_url)
 
     #Exists
-carURL = 'https://www.cars.com/vehicledetail/3cbf49c1-3338-4c7b-b3a9-9b3862230f10/'
+carURL = 'https://www.cars.com/vehicledetail/dec1cb07-a7f2-41d6-a60c-659e670db63f/'
     #BADDDDD
 carURL = 'https://www.cars.com/vehicledetail/6313112d-5f5e-4b8e-b751-57bfcd331f96/'
 
 attr = Scrap_Car(carURL)
 attr
+
