@@ -1,8 +1,4 @@
 
-def addAND(param):
-    if param == '':
-        return ''
-    return param + '&'
 
 def Url_Single(id):
     return 'https://www.cars.com/vehicledetail/' + id + '/'
@@ -36,12 +32,24 @@ def Url_Multi(_page=1,_pgsize='100',_make='',_model='',_trim='',_yrmin='',_yrmax
     carURL = addAND(make) + addAND(model) + addAND(trim) + addAND(yrmin) + addAND(yrmax) + addAND(mile) + addAND(type)
     return baseURL + websiteURL + carURL  + zip
 
+##############################################
+## Suplemental functions
+
+def addAND(param):
+    if param == '':
+        return ''
+    return param + '&'
+
+
+
+
+
 
 
 # carsDotCom_Multi(page=5,pgsize=50,make='toyota',model='toyota-camry',trim='toyota-camry-se',yrmin='2018',yrmax='2018',mile='',type='used',sort='list_price',maxdist='all',zip='57193')
 # carsDotCom_Multi(page=0,make='toyota',model='toyota-camry',zip='57193')
 
-# '''
+
 # page1 = 'https://www.cars.com/shopping/results/?dealer_id=&keyword=&list_price_max=&list_price_min=&makes[]=toyota&maximum_distance=all&mileage_max=&models[]=toyota-camry&page_size=20&sort=best_match_desc&stock_type=used&trims[]=toyota-camry-se&year_max=2018&year_min=2018&zip=57193'
 # page1 = 'https://www.cars.com/shopping/results/?
 #     dealer_id=
@@ -79,13 +87,3 @@ def Url_Multi(_page=1,_pgsize='100',_make='',_model='',_trim='',_yrmin='',_yrmax
 #     &year_max=2018
 #     &year_min=2018
 #     &zip=57193'
-
-
-# https://www.cars.com/shopping/results/?dealer_id=&keyword=
-# &list_price_max=&list_price_min=&maximum_distance=all&mileage_max=&page_size=50
-# &sort=list_price
-
-# &stock_type=all&year_max=&year_min=&zip=57193
-
-
-# '''
