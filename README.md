@@ -9,10 +9,25 @@ Want to make maintainable to see a car listed, sold and re-listed later to see c
 Ultimately want to practice python scraping, DB design, dashboard summary on captured data.
 
 ## Capabilities
+Currently 2 different loops with one to acquire listed url's and another to go to each listing to get additional meta data.
+Capable of being blocked by Cars.com :), so working to be polite and shifty.
+
+## Table of Contents:
+### CarsURL
+When passing Car Type or VIN, returns Cars.com url
+### CarsDB
+Connect to sqlite DB, Query & Insert functions
+### CarsScrap
+Requesting url with ScraperAPI or manual method of rotating header.
+### CarsParse
+With scraped website, clean and parse to values wanted
+### CarsLoop
+Loops through pages to scrap IDs, and loop known IDs to refresh/check.
 
 
 ## Future Goals
-+ Extend to other websites
++ Refactor to crawl individual url meta from multi listing page (more human like).
 + Move to online database from sqlite local
 + Practice setting up on Azure
 + Host dashboard on [QuinnFargen.com](https://quinnfargen.com/)
++ Extend to other websites
