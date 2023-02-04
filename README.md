@@ -1,8 +1,8 @@
 # CarsRepo
 
 [Cars.com](https://www.cars.com/ "Cars.com Homepage")
-![logo](https://github.com/QuinnFargen/CarsRepo/blob/main/MakesModels/CarsDotComLogo.png )
 
+<img src="https://github.com/QuinnFargen/CarsRepo/blob/main/MakesModels/CarsDotComLogo.png" data-canonical-src="https://github.com/QuinnFargen/CarsRepo/blob/main/MakesModels/CarsDotComLogo.png" width="300" height="155" />
 
 
 ## Objective
@@ -16,15 +16,15 @@ Currently 2 different loops with one to acquire listed url's and another to go t
 Capable of being blocked by Cars.com :), so working to be polite and shifty.
 
 ## Table of Contents:
-### CarsURL
+### [CarsURL](https://github.com/QuinnFargen/CarsRepo/blob/main/CarsURL.py)
 When passing Car Type or VIN, returns Cars.com url
-### CarsDB
+### [CarsDB](https://github.com/QuinnFargen/CarsRepo/blob/main/CarsDB.py)
 Connect to sqlite DB, Query & Insert functions
-### CarsScrap
+### [CarsScrap](https://github.com/QuinnFargen/CarsRepo/blob/main/CarsScrap.py)
 Requesting url with ScraperAPI or manual method of rotating header.
-### CarsParse
+### [CarsParse](https://github.com/QuinnFargen/CarsRepo/blob/main/CarsParse.py)
 With scraped website, clean and parse to values wanted
-### CarsLoop
+### [CarsLoop](https://github.com/QuinnFargen/CarsRepo/blob/main/CarsLoop.py)
 Loops through pages to scrap IDs, and loop known IDs to refresh/check.
 
 
@@ -33,4 +33,4 @@ Loops through pages to scrap IDs, and loop known IDs to refresh/check.
 + Move to online database from sqlite local
 + Practice setting up on Azure
 + Host dashboard on [QuinnFargen.com](https://quinnfargen.com/)
-+ Extend to other websites
++ Extend to other car listing websites
