@@ -83,7 +83,7 @@ def Loop_Vehicle_AddVIN():
         attr = Scrap_Car(url)  
         print(url); print(attr)   
         if attr == {'Status': 'No Longer'}:
-            log_Vehicle(_CDCID=CDCID,_IsActive=0)
+            log_Vehicle(_CDCID=CDCID,_IsActive=0,_IsUpdate=1)
         for a in sorted(attr):
             log_ScrapMeta(_VID = VID, _SLID = SLID, _TagName = a, _TagValue = attr[a])   
             if a == 'VIN':
