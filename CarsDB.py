@@ -3,9 +3,6 @@ import sqlite3
 import pandas as pd
 from datetime import datetime
 
- 
-
-
 ########################################################
 # DB Connections & Cursors
 
@@ -151,42 +148,3 @@ def log_Vehicle(_IsUpdate=0,_VIN='',_MMTID='',_CDCID='',_LastScrapDt='',_IsActiv
 
 
 
-
-
-
-
-# log_Vehicle(_CDCID = 'e499140e-82d3-4a47-829c-84edce1a22',_LastScrapDt='2022-12-22 04:47:40')
-# log_Vehicle(_IsUpdate=1,_CDCID = 'e499140e-82d3-4a47-829c-84edf6ce1a22',_LastScrapDt='2022-12-22 04:47:01')
-# log_Vehicle(_IsUpdate=1,_IsActive=0,_CDCID = 'e499140e-82d3-4a47-829c-84edf6ce1a22',_LastScrapDt='2022-12-22 04:47:01')
-
-
-
-
-
-
-
-
-# SLID = log_ScrapLog(1,1)
-# SLID = log_ScrapMeta(1,'CDCID', 'b2387cb6-7a74-4608-add3-274f4e578576' )
-# SLID = log_Vehicle(_VIN = 'ASDLFK234234SF', _MMID = 0, _CDCID = 'b2387cb6-7a74-4608-add3-274f4e578576' )
-
-# con, cur = get_CDC_ConCur()
-# print(pd.read_sql_query("SELECT * from ScrapLog", con))
-# print(pd.read_sql_query("SELECT * from ScrapMeta", con))
-# print(pd.read_sql_query("SELECT * from Vehicle", con))
-
-    #Querying multiple columns
-# res = new_cur.execute("SELECT title, year FROM movie ORDER BY score DESC")
-# title, year = res.fetchone()
-
-
-
-# df2 = get_MMTrim(1); print(df2.head())
-
-# df = pd.read_sql_query("SELECT * from ScrapLog", con)
-
-# # Verify that result of SQL query is stored in the dataframe
-
-# print(df.head())
-
-# con.close()

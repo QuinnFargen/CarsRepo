@@ -5,33 +5,25 @@ from CarsScrap import get_soup
 
 def Scrap_IDs(carURL):
     soup = get_soup(carURL, 'IDs')
-
         #Getting all divs with an id name starting with vehicle-card
     vehicleIDs = soup.findAll('div', id=lambda x: x and x.startswith('vehicle-card-'))
-
-        #Get all the ID values, strip off additional text from ID
-    IDs = []
+    IDs = []    #Get all the ID values, strip off additional text from ID
     for i in range(len(vehicleIDs)):
         for ID in vehicleIDs[i].find_all('div', id=True):  
             if '-lead-btns' in ID.get('id'):
                 extra = ID.get('id')
                 IDs.append(extra.replace('-lead-btns','').replace('sponsored-',''))
-
     tot_entries = soup.find('span', attrs={'class': 'total-entries'}).text
     numEntry = int(''.join(i for i in tot_entries if i.isdigit()))
-
     return IDs, numEntry
 
 
 def Scrap_Car(carURL):
     soup = get_soup(carURL, 'Car')
-    attr = {}
-    # When Car Not Listed:
-        # <p class="sds-notification__desc">Sorry, this vehicle is no longer available.</p>
+    attr = {}     
     if soup.find('p', attrs={'class': 'sds-notification__desc'}) is not None:
         if soup.find('p', attrs={'class': 'sds-notification__desc'}).text == 'Sorry, this vehicle is no longer available.':
-            return {'Status': 'No Longer'}
-
+            return {'Status': 'No Longer'}  # When Car Not Listed   # <p class="sds-notification__desc">Sorry, this vehicle is no longer available.</p>
         # Pull out individual values
     attr["new_used"] = soup.find('p', attrs={'class': 'new-used'}).text
     attr["listing_title"] = soup.find('h1', attrs={'class': 'listing-title'}).text
@@ -60,10 +52,10 @@ def Scrap_Car(carURL):
 # cars_url = 'https://www.cars.com/shopping/results/?page=2&page_size=20&dealer_id=&keyword=&list_price_max=&list_price_min=&makes[]=toyota&maximum_distance=all&mileage_max=&models[]=toyota-camry&sort=best_match_desc&stock_type=used&trims[]=toyota-camry-se&year_max=2018&year_min=2018&zip=57193'
 # Scrap_IDs(cars_url)
 
-    #Exists
-carURL = 'https://www.cars.com/vehicledetail/dec1cb07-a7f2-41d6-a60c-659e670db63f/'
-    #BADDDDD
-carURL = 'https://www.cars.com/vehicledetail/6313112d-5f5e-4b8e-b751-57bfcd331f96/'
+#     #Exists
+# carURL = 'https://www.cars.com/vehicledetail/dec1cb07-a7f2-41d6-a60c-659e670db63f/'
+#     #BADDDDD
+# carURL = 'https://www.cars.com/vehicledetail/6313112d-5f5e-4b8e-b751-57bfcd331f96/'
 
-attr = Scrap_Car(carURL)
-attr
+# attr = Scrap_Car(carURL)
+# attr

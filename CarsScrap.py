@@ -75,25 +75,5 @@ headers_list = [
         "Accept-Language": "en-US,en;q=0.9"
     }
 ]
-# # Create ordered dict from Headers above
-# ordered_headers_list = []
-# for headers in headers_list:
-#     h = OrderedDict()
-#     for header,value in headers.items():
-#         h[header]=value
-#     ordered_headers_list.append(h)
-    
-    
-url = 'https://httpbin.org/headers'
 
-for i in range(1,4):
-    #Pick a random browser headers
-    headers = random.choice(headers_list)
-    #Create a request session
-    r = requests.Session()
-    r.headers = headers
-    
-    response = r.get(url)
-    print("Request #%d\nUser-Agent Sent:%s\n\nHeaders Recevied by HTTPBin:"%(i,headers['User-Agent']))
-    print(response.json())
-    print("-------------------")
+
