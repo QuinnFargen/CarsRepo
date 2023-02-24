@@ -18,26 +18,11 @@ Loop_SLID_ToVID()
 #############################################################################################
 ## 2 - Loop thru all and make individual calls as you go along. can pass url
 
+
+
+
 # https://www.scrapehero.com/how-to-fake-and-rotate-user-agents-using-python-3/
 # https://brightdata.com/blog/how-tos/user-agents-for-web-scraping-101
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer
-
-
-
-
-# Table of Contents:
-#   CarsURL
-#       When passing Car Type or VIN, returns Cars.com url
-#   CarsDB
-#       Connect to sqlite DB, Query & Insert functions
-#   CarsScrp
-#       Requesting url, Scrapping & cleaning to values wanted
-#   CarsLoop
-#       Loops through pages to scrap IDs, and loop known IDs to refresh/check.
-
-
-
-
-
 
 
