@@ -4,6 +4,10 @@
 
 <img src="https://github.com/QuinnFargen/CarsRepo/blob/main/MakesModels/CarsDotComLogo.png" data-canonical-src="https://github.com/QuinnFargen/CarsRepo/blob/main/MakesModels/CarsDotComLogo.png" width="300" height="155" />
 
+[Edmunds.com](https://www.edmunds.com/ "Edmunds Homepage")
+
+<img src="https://github.com/QuinnFargen/CarsRepo/blob/main/MakesModels/EdmundsLogo.png" data-canonical-src="https://github.com/QuinnFargen/CarsRepo/blob/main/MakesModels/EdmundsLogo.png" width="300" height="155" />
+
 
 ## Objective
 Curently using Cars.com (CDC) to scrap popular makes and models to collect what is listed. 
