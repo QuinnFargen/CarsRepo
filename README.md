@@ -35,6 +35,7 @@ Loops through pages to scrap IDs, and loop known IDs to refresh/check.
 ## Future Goals
 + Refactor to crawl individual url meta from multi listing page (more human like).
 + Move to online database from sqlite local
++ Grab url to photo of vehicle
 + Practice setting up on Azure
 + Host dashboard on [QuinnFargen.com](https://quinnfargen.com/)
 + Extend to other car listing websites
