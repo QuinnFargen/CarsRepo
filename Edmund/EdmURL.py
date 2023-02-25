@@ -1,13 +1,4 @@
 
-# https://www.edmunds.com/inventory/srp.html?inventorytype=used&make=toyota&model=camry&radius=6000
-# https://www.edmunds.com/inventory/srp.html?inventorytype=used&make=toyota&model=camry&radius=6000&pagenumber=2
-# https://www.edmunds.com/inventory/srp.html?inventorytype=used&make=toyota&model=camry&radius=6000&trim=camry%7Cse&year=2019-2022
-# https://www.edmunds.com/inventory/srp.html?inventorytype=used&make=toyota&model=camry&radius=6000&trim=camry%7Cse&year=2019-*
-# https://www.edmunds.com/inventory/srp.html?inventorytype=used%2Ccpo%2Cnew&make=toyota&model=camry&radius=6000&trim=camry%7Cse&year=2019-*&mileage=*-176000
-
-# https://www.edmunds.com/toyota/camry/2019/vin/4T1B11HK1KU276387/?radius=6000
-
-
 
 def Url_Single(_make,_model,_year,_vin):
     return 'https://www.edmunds.com/' + _make + '/' + _model + '/' + _year + '/vin/' + _vin
@@ -44,3 +35,15 @@ def addAND(param):
     if param == '':
         return ''
     return param + '&'
+
+
+
+
+# https://www.edmunds.com/inventory/srp.html?inventorytype=used&make=toyota&model=camry&radius=6000
+# https://www.edmunds.com/inventory/srp.html?inventorytype=used&make=toyota&model=camry&radius=6000&pagenumber=2
+# https://www.edmunds.com/inventory/srp.html?inventorytype=used&make=toyota&model=camry&radius=6000&trim=camry%7Cse&year=2019-2022
+# https://www.edmunds.com/inventory/srp.html?inventorytype=used&make=toyota&model=camry&radius=6000&trim=camry%7Cse&year=2019-*
+# https://www.edmunds.com/inventory/srp.html?inventorytype=used%2Ccpo%2Cnew&make=toyota&model=camry&radius=6000&trim=camry%7Cse&year=2019-*&mileage=*-176000
+
+# https://www.edmunds.com/toyota/camry/2019/vin/4T1B11HK1KU276387/?radius=6000
+

@@ -4,5 +4,6 @@ config.py
 request_log
 archive
 __pycache__
-.git
+.gitignore
+.gitattributes
 .DS_Store
