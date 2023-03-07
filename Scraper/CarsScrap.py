@@ -1,13 +1,13 @@
 
 import requests
-import config
+import Scraper.config
 import random 
 from bs4 import BeautifulSoup
 from scraper_api import ScraperAPIClient
 
 
 def get_soup_safe(carURL):
-    client = ScraperAPIClient(config.scraper_APIKey)
+    client = ScraperAPIClient(Scraper.config.scraper_APIKey)
     result = client.get(url = carURL).text
     return BeautifulSoup(result, 'html.parser')
 
