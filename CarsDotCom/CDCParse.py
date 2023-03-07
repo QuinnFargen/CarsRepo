@@ -1,6 +1,6 @@
 
 from bs4 import BeautifulSoup
-from CarsScrap import get_soup
+from Scraper.CarsScrap import get_soup
 
 
 def Scrap_IDs(carURL):
