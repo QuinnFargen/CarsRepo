@@ -1,9 +1,0 @@
-
-config.py
-
-request_log
-archive/
-__pycache__/
-.gitignore
-.gitattributes
-.DS_Store
