@@ -13,12 +13,12 @@ def get_soup_safe(carURL):
 
 def get_soup_spicy(carURL,refURL):
     header = random.choice(headers_list)
-    header["Referer"] = refURL
+    # header["Referer"] = refURL
     r = requests.get(carURL, headers=header)
     return BeautifulSoup(r.text, 'html.parser')
 
 def get_soup(carURL,useCase,refURL='https://www.cars.com/'):
-    if useCase == 'IDs':
+    if useCase == 'IDs' or useCase == 'spicy':
         return get_soup_spicy(carURL,refURL)
     elif useCase == 'Car':
         return get_soup_safe(carURL)
