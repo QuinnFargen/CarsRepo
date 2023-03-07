@@ -2,7 +2,7 @@
 config.py
 
 request_log
-archive
+archive/
 __pycache__/
 .gitignore
 .gitattributes
