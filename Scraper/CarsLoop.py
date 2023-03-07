@@ -1,8 +1,8 @@
 
 
-from CarsURL import Url_Multi, Url_Single
-from CarsParse import Scrap_IDs, Scrap_Car
-from Storage.CarsDB import log_ScrapLog, log_ScrapMeta, log_Vehicle, get_MMTrim, get_Vehicle_VinCdcID, get_ScrapLog_SLID, get_Meta_SLIDTagname
+from CarsDotCom.CDCURL import Url_Multi, Url_Single
+from CarsDotCom.CDCParse import Scrap_IDs, Scrap_Car
+from Storage.CarsRepoDB import log_ScrapLog, log_ScrapMeta, log_Vehicle, get_MMTrim, get_Vehicle_VinCdcID, get_ScrapLog_SLID, get_Meta_SLIDTagname
 from time import sleep
 
 

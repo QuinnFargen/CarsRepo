@@ -7,7 +7,7 @@ from datetime import datetime
 # DB Connections & Cursors
 
 def get_CDC_ConCur():
-    con = sqlite3.connect("CDC.db")
+    con = sqlite3.connect("CarsRepo.db")
     cur = con.cursor()
     return con, cur
 
