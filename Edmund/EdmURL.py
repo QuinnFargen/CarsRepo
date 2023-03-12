@@ -1,12 +1,7 @@
 
 
-def Url_Single(_make='',_model='',_year='',_vin='',_allfour=[]):
-    if _make=='' and _model=='' and _year=='' and _vin=='':
-        _make=_allfour[0]
-        _model=_allfour[1]
-        _year=_allfour[2]
-        _vin=_allfour[3]
-    return 'https://www.edmunds.com/' + _make + '/' + _model + '/' + _year + '/vin/' + _vin
+def Url_Single(_allfour):
+    return 'https://www.edmunds.com/' + _allfour[0] + '/' + _allfour[1] + '/' + _allfour[2] + '/vin/' + _allfour[3]
 
 
 def Url_Multi(_page=1,_make='',_model='',_trim='',_yrmin='',_yrmax='',_mile='',_type='used%2Ccpo%2Cnew'):
@@ -52,4 +47,8 @@ def addAND(param):
 # https://www.edmunds.com/inventory/srp.html?inventorytype=used%2Ccpo%2Cnew&make=toyota&model=camry&radius=6000&trim=camry%7Cse&year=2019-*&mileage=*-176000
 
 # https://www.edmunds.com/toyota/camry/2019/vin/4T1B11HK1KU276387/?radius=6000
+
+
+
+
 
