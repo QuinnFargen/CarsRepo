@@ -12,6 +12,14 @@ def Scrap_href(carURL):
     numEntry = int(''.join(i for i in tot_entries if i.isdigit()))
     return list(set(hrefs)), numEntry
 
+def Scrap_IDs(carURL):
+    hrefs, numEntry = Scrap_href(carURL)
+    IDs = []; indices = [1,2,3,5]
+    for h in range(len(hrefs)):
+        IDs.append(list(map(lambda x: hrefs[h].split('/')[x],indices)))
+    return IDs
+
+
 def Scrap_Car(carURL):
     soup = get_soup(carURL, 'spicy')
     attr = {}     
