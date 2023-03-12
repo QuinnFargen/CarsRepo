@@ -17,7 +17,7 @@ def Scrap_IDs(carURL):
     IDs = []; indices = [1,2,3,5]
     for h in range(len(hrefs)):
         IDs.append(list(map(lambda x: hrefs[h].split('/')[x],indices)))
-    return IDs
+    return [IDs,numEntry]
 
 
 def Scrap_Car(carURL):

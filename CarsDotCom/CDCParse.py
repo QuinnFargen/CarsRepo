@@ -15,7 +15,7 @@ def Scrap_IDs(carURL):
                 IDs.append(extra.replace('-lead-btns','').replace('sponsored-',''))
     tot_entries = soup.find('span', attrs={'class': 'total-entries'}).text
     numEntry = int(''.join(i for i in tot_entries if i.isdigit()))
-    return IDs  #, numEntry
+    return [IDs,numEntry]
 
 
 def Scrap_Car(carURL):

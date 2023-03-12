@@ -9,8 +9,8 @@ class Website():
         self.Scrap_IDs = _Scrap_IDs
 
     def get_allLinks(self, CarsURL):
-        IDs = self.Scrap_IDs(CarsURL)
-        Urls = []
+        Scrap = self.Scrap_IDs(CarsURL)
+        Urls = []; IDs = Scrap[0]
         for i in range(len(IDs)):
             Urls.append(self.Url_Single(IDs[i]))
         return Urls
