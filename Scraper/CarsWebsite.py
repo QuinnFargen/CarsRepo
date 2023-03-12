@@ -15,7 +15,22 @@ class Website():
             Urls.append(self.Url_Single(IDs[i]))
         return Urls
     
- 
+
+from Edmund.EdmParse import E_Scrap_Car, E_Scrap_IDs
+from Edmund.EdmURL import E_Url_Multi, E_Url_Single
+
+class Edmund(Website):
+    def __init__(self):
+        super().__init__(E_Url_Multi, E_Url_Single, E_Scrap_Car, E_Scrap_IDs)
+
+
+from CarsDotCom.CDCParse import C_Scrap_Car, C_Scrap_IDs
+from CarsDotCom.CDCURL import C_Url_Multi, C_Url_Single
+
+class CarsCom(Website):
+    def __init__(self):
+        super().__init__(C_Url_Multi, C_Url_Single, C_Scrap_Car, C_Scrap_IDs)
+
 
 
 # from Edmund.EdmParse import Scrap_Car, Scrap_IDs

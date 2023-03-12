@@ -1,10 +1,10 @@
 
 
-def Url_Single(_allfour):
+def E_Url_Single(_allfour):
     return 'https://www.edmunds.com/' + _allfour[0] + '/' + _allfour[1] + '/' + _allfour[2] + '/vin/' + _allfour[3]
 
 
-def Url_Multi(_page=1,_make='',_model='',_trim='',_yrmin='',_yrmax='',_mile='',_type='used%2Ccpo%2Cnew'):
+def E_Url_Multi(_page=1,_make='',_model='',_trim='',_yrmin='',_yrmax='',_mile='',_type='used%2Ccpo%2Cnew'):
     baseURL = 'https://www.edmunds.com/inventory/srp.html?'
     page = 'pagenumber=' + str(_page)
     if _page == 0:

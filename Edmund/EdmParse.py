@@ -2,7 +2,7 @@
 from Scraper.CarsScrap import get_soup
 
 
-def Scrap_href(carURL):
+def E_Scrap_href(carURL):
     soup = get_soup(carURL, 'spicy')
     hrefs = []
     for link in soup.findAll('a'):
@@ -12,15 +12,15 @@ def Scrap_href(carURL):
     numEntry = int(''.join(i for i in tot_entries if i.isdigit()))
     return list(set(hrefs)), numEntry
 
-def Scrap_IDs(carURL):
-    hrefs, numEntry = Scrap_href(carURL)
+def E_Scrap_IDs(carURL):
+    hrefs, numEntry = E_Scrap_href(carURL)
     IDs = []; indices = [1,2,3,5]
     for h in range(len(hrefs)):
         IDs.append(list(map(lambda x: hrefs[h].split('/')[x],indices)))
     return [IDs,numEntry]
 
 
-def Scrap_Car(carURL):
+def E_Scrap_Car(carURL):
     soup = get_soup(carURL, 'spicy')
     attr = {}     
     if soup.find('h2', attrs={'class': 'pt-1 pt-md-3 px-1 px-md-3 pb-2 text-center display-1 m-0'}) is not None:

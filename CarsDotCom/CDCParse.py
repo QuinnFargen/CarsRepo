@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from Scraper.CarsScrap import get_soup
 
 
-def Scrap_IDs(carURL):
+def C_Scrap_IDs(carURL):
     soup = get_soup(carURL, 'IDs')
         #Getting all divs with an id name starting with vehicle-card
     vehicleIDs = soup.findAll('div', id=lambda x: x and x.startswith('vehicle-card-'))
@@ -18,7 +18,7 @@ def Scrap_IDs(carURL):
     return [IDs,numEntry]
 
 
-def Scrap_Car(carURL):
+def C_Scrap_Car(carURL):
     soup = get_soup(carURL, 'Car')
     attr = {}     
     if soup.find('p', attrs={'class': 'sds-notification__desc'}) is not None:
