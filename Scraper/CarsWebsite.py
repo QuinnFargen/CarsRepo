@@ -9,13 +9,21 @@ class Website():
             return 'https://www.cars.com/vehicledetail/' + _id + '/'
         return 'https://www.edmunds.com/' + _allfour[0] + '/' + _allfour[1] + '/' + _allfour[2] + '/vin/' + _allfour[3]
 
-    def paramComb(params):
-        url = '&'.join(params)
+    # params = ['https://www.cars.com/shopping/results/?','','makes[]=toyota']
+    def paramComb(self, pars=[]):
+        url = '&'.join(pars)
         while '&&' in url:
             url = url.replace('&&','&')
         return url
+    
+    def paramNone(self,par,pre=''):
+        if par == None:
+            return ''
+        if pre != '':
+            return pre + str(par)
+        return str(par)
   
-    def Url_Multi(self,_page=1,_pgsize='100',_make='',_model='',_trim='',_yrmin='',_yrmax='',_mile='',_type='all',_sort='best_match_desc',_maxdist='all'):
+    def Url_Multi(self,_make,_model,_trim,_yrmin,_yrmax,_page=1,_pgsize='100',_mile='',_type='all',_sort='best_match_desc',_maxdist='all'):
         if self.Domain == 'CDC':
             baseURL = 'https://www.cars.com/shopping/results/?'
             page = 'page=' + str(_page)
@@ -23,22 +31,18 @@ class Website():
                 page = ''
             pgsize = 'page_size=' + str(_pgsize)
             make = 'makes[]=' + _make
-            model = 'models[]=' + _model
-            if _trim is None:
-                trim = ''
-            else:
-                trim = 'trims[]=' + _trim
-            if _yrmin == '0':
-                yrmin = ''; yrmax = ''
-            else:
-                yrmin = 'year_max=' + _yrmin
-                yrmax = 'year_min=' + _yrmax
+            model = self.paramNone(_make+'-'+_model, pre='models[]=')
+            trim = self.paramNone(_make+'-'+_model+'-'+_trim, pre='trims[]=')
+            yrmin = self.paramNone(_yrmin, pre='year_min=')
+            yrmax = self.paramNone(_yrmax, pre='year_max=')
             mile = 'mileage_max=' + _mile  # 10000, by 10K, 100000, 150000, 200000, 250000, blank for any
             type = 'stock_type=' + _type # all, used, new_cpo, new, cpo
             sort = 'sort=' + _sort  # best_match_desc, list_price, list_price_desc, mileage, mileage_desc, distance, best_deal, year_desc, year, listed_at_desc, listed_at
             maxdist = 'maximum_distance=' + _maxdist   # all, 500, 250, 100, 50
             zip = 'zip=57106'
-            return self.paramComb([baseURL,page,pgsize,sort,maxdist,make,model,trim,yrmin,yrmax,mile,type,zip])
+            pars = [baseURL,page,pgsize,sort,maxdist,make,model,trim,yrmin,yrmax,mile,type,zip]
+            Murl = self.paramComb(pars)
+            return Murl
         else:   #Edmunds
             baseURL = 'https://www.edmunds.com/inventory/srp.html?'
             page = 'pagenumber=' + str(_page)
@@ -46,11 +50,8 @@ class Website():
                 page = ''
             make = 'make=' + _make
             model = 'model=' + _model
-            if _trim == '':
-                trim = ''
-            else:
-                trim = 'trims=' + _trim
-            if _yrmin == '' or _yrmax == '':
+            trim = trim = 'trims=' + self.paramNone(_trim)
+            if self.paramNone(_yrmin) == '' or self.paramNone(_yrmax) == '':
                 yr = ''
             else:
                 yr = 'year=' + _yrmin + '-' + _yrmax
@@ -59,7 +60,9 @@ class Website():
                 _type = 'used%2Ccpo%2Cnew'
             type = 'inventorytype=' + _type # all, used, new_cpo, new, cpo
             zip = 'radius=6000'
-            return self.paramComb([baseURL,page,make,model,trim,yr,mile,type,zip])
+            pars = [baseURL,page,make,model,trim,yr,mile,type,zip]
+            Murl = self.paramComb(pars)
+            return Murl
         
     def Scrap_href(self,soup):
         hrefs = []
