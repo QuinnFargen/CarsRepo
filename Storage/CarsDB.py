@@ -27,7 +27,7 @@ class CarsRepoDB():
     ########################################################
     # Query from sql what cars we want to scrap
 
-    def get_MMTrim(self,_MMTID = 0,_NonTrim=0):
+    def get_MMT(self,_MMTID = 0,_NonTrim=0):
         """
         Get MMTrim all Columns with additional, MMTID optional WHERE.
         :param _MMTID(0)
@@ -35,21 +35,14 @@ class CarsRepoDB():
         """
         where = ""
         if _MMTID != 0:
-            where = " WHERE M.MMTID = " + str(_MMTID)
-            query = "SELECT * from MMTrim m" + where
+            where = " WHERE m.MMTID = " + str(_MMTID)
+            query = "SELECT * from MMT m" + where
+        elif _NonTrim == 1:
+            query = "SELECT * FROM MakeModel m"
         else:
-            query = "SELECT * from MMTrim m" + where
+            query = "SELECT * from MMT m" + where
         MMT = pd.read_sql_query(query, self.con)
-        # _make = MMT["CDCmake"].values[0]
-        # _model = MMT["CDCmodel"].values[0]
-        # _trim = MMT["CDCtrim"].values[0]
-        # _minYr = MMT["minYr"].values[0]
-        # _maxYr = MMT["maxYr"].values[0]
-        # if _maxYr is None:
-        #     _maxYr = datetime.now().year
-        # if _MMTID == 0:
-        #     return MMT
-        return MMT  #, _make, _model, _trim, _minYr, _maxYr
+        return MMT 
 
     def get_ScrapLog_SLID(self,_MMTID = 0):
         """
