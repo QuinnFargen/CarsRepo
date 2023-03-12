@@ -2,6 +2,7 @@
 import sqlite3
 import pandas as pd
 from datetime import datetime
+import os
 
 
 
@@ -16,6 +17,7 @@ class CarsRepoDB():
     # DB Connections & Cursors
 
     def get_CDC_ConCur(self, ConCur):
+        os.chdir('/Users/quinnfargen/Documents/GitHub/CarsRepo/Storage')
         con = sqlite3.connect("CarsRepo.db")
         cur = con.cursor()
         if ConCur == 'con':
@@ -36,18 +38,18 @@ class CarsRepoDB():
             where = " WHERE M.MMTID = " + str(_MMTID)
             query = "SELECT * from MMTrim m" + where
         else:
-            query = "SELECT * from MakeModel m" + where
+            query = "SELECT * from MMTrim m" + where
         MMT = pd.read_sql_query(query, self.con)
-        _make = MMT["CDCmake"].values[0]
-        _model = MMT["CDCmodel"].values[0]
-        _trim = MMT["CDCtrim"].values[0]
-        _minYr = MMT["minYr"].values[0]
-        _maxYr = MMT["maxYr"].values[0]
-        if _maxYr is None:
-            _maxYr = datetime.now().year
-        if _MMTID == 0:
-            return MMT
-        return MMT, _make, _model, _trim, _minYr, _maxYr
+        # _make = MMT["CDCmake"].values[0]
+        # _model = MMT["CDCmodel"].values[0]
+        # _trim = MMT["CDCtrim"].values[0]
+        # _minYr = MMT["minYr"].values[0]
+        # _maxYr = MMT["maxYr"].values[0]
+        # if _maxYr is None:
+        #     _maxYr = datetime.now().year
+        # if _MMTID == 0:
+        #     return MMT
+        return MMT  #, _make, _model, _trim, _minYr, _maxYr
 
     def get_ScrapLog_SLID(self,_MMTID = 0):
         """

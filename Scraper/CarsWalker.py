@@ -6,28 +6,30 @@ from Scraper.CarsScrap import Scrap
 
 class CarZombie(CarsRepoDB, Website, Scrap):
 
-    def __init__(self):
+    def __init__(self,Domain):
         CarsRepoDB.__init__(self)
-        Website.__init__(self)
+        Website.__init__(self,Domain)
+        Scrap.__init__(self)
 
     def get_allLinks(self, CarsURL):
-        Scrap = self.Scrap_IDs(CarsURL)
+        soup = self.get_soup(CarsURL,'spicy')
+        Scrap = self.Scrap_IDs(soup)
         Urls = []; IDs = Scrap[0]
         for i in range(len(IDs)):
             Urls.append(self.Url_Single(IDs[i]))
         return Urls
 
-    def get_pop(self, _MMTID=''):
-        MMT_All = self.get_MMTrim(_MMTID=_MMTID) 
+    def get_pop(self, MMTID=0):
+        MMT_All = self.get_MMTrim(_MMTID=MMTID) 
         print(MMT_All)
 
 
 
     
 
-Brains = CarZombie()
+Brains = CarZombie('CDC')
+Brains.get_pop(MMTID=0)
 
-Brains.get_pop()
 
 
 

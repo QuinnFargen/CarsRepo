@@ -1,6 +1,4 @@
 
-from bs4 import BeautifulSoup
-
 class Website():
 
     def __init__(self,Domain):
