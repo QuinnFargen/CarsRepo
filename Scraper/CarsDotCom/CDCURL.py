@@ -1,9 +1,9 @@
 
 
-def Url_Single(id):
+def C_Url_Single(id):
     return 'https://www.cars.com/vehicledetail/' + id + '/'
 
-def Url_Multi(_page=1,_pgsize='100',_make='',_model='',_trim='',_yrmin='',_yrmax='',_mile='',_type='all',_sort='best_match_desc',_maxdist='all',_zip='57106'):
+def C_Url_Multi(_page=1,_pgsize='100',_make='',_model='',_trim='',_yrmin='',_yrmax='',_mile='',_type='all',_sort='best_match_desc',_maxdist='all',_zip='57106'):
     baseURL = 'https://www.cars.com/shopping/results/?'
     page = 'page=' + str(_page)
     if _page == 0:
