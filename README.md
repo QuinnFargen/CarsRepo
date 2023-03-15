@@ -23,13 +23,13 @@ Currently refactoring into classes as well as a new method of going to each post
 ## Table of Contents:
 ### [CarsWebsite](https://github.com/QuinnFargen/CarsRepo/blob/main/Scraper/CarsWebsite.py)
 When passing Car Type or VIN, returns url as well as parsing requested pages.
-### [CarsDB](https://github.com/QuinnFargen/CarsRepo/blob/main/Scraper/CarsDB.py)
+### [CarsDB](https://github.com/QuinnFargen/CarsRepo/blob/main/Storage/CarsDB.py)
 Connect to sqlite DB, Query & Insert functions
 ### [CarsScrap](https://github.com/QuinnFargen/CarsRepo/blob/main/Scraper/CarsScrap.py)
 Requesting url with ScraperAPI or manual method of rotating header.
 ### [CarsWalker](https://github.com/QuinnFargen/CarsRepo/blob/main/Scraper/CarsWalker.py)
 New method of walking multiple listing page more human like.
-### [CarsLoop](https://github.com/QuinnFargen/CarsRepo/blob/main/CarsLoop.py)
+### [CarsLoop](https://github.com/QuinnFargen/CarsRepo/blob/main/Scraper/CarsLoop.py)
 Old method to loop through pages to scrap IDs, and loop known IDs to refresh/check.
 
 
