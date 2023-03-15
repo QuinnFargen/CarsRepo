@@ -10,26 +10,27 @@
 
 
 ## Objective
-Curently using Cars.com (CDC) to scrap popular makes and models to collect what is listed. 
+Curently using Cars.com (CDC) & Edmunds to scrap popular makes and models to collect what is listed. 
 Python process to loop through stored makes and models in sqlite DB and log back scraped values into DB.
 Want to make maintainable to see a car listed, sold and re-listed later to see change over time by VIN.
 Ultimately want to practice python scraping, DB design, dashboard summary on captured data.
 
 ## Capabilities
-Currently 2 different loops with one to acquire listed url's and another to go to each listing to get additional meta data.
+Previously built a brute force method to loop thru pages gathering posting, then looped thru postings (Not human behavior like).
 Capable of being blocked by Cars.com :), so working to be polite and shifty.
+Currently refactoring into classes as well as a new method of going to each posting right away and back to the multiple listing page (Human like).
 
 ## Table of Contents:
-### [CarsURL](https://github.com/QuinnFargen/CarsRepo/blob/main/CarsURL.py)
-When passing Car Type or VIN, returns Cars.com url
-### [CarsDB](https://github.com/QuinnFargen/CarsRepo/blob/main/CarsDB.py)
+### [CarsWebsite](https://github.com/QuinnFargen/CarsRepo/blob/main/Scraper/CarsWebsite.py)
+When passing Car Type or VIN, returns url as well as parsing requested pages.
+### [CarsDB](https://github.com/QuinnFargen/CarsRepo/blob/main/Scraper/CarsDB.py)
 Connect to sqlite DB, Query & Insert functions
-### [CarsScrap](https://github.com/QuinnFargen/CarsRepo/blob/main/CarsScrap.py)
+### [CarsScrap](https://github.com/QuinnFargen/CarsRepo/blob/main/Scraper/CarsScrap.py)
 Requesting url with ScraperAPI or manual method of rotating header.
-### [CarsParse](https://github.com/QuinnFargen/CarsRepo/blob/main/CarsParse.py)
-With scraped website, clean and parse to values wanted
+### [CarsWalker](https://github.com/QuinnFargen/CarsRepo/blob/main/Scraper/CarsWalker.py)
+New method of walking multiple listing page more human like.
 ### [CarsLoop](https://github.com/QuinnFargen/CarsRepo/blob/main/CarsLoop.py)
-Loops through pages to scrap IDs, and loop known IDs to refresh/check.
+Old method to loop through pages to scrap IDs, and loop known IDs to refresh/check.
 
 
 ## Future Goals
